@@ -1,0 +1,165 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.io.IOException;
+import java.util.List;
+public class Main {
+    public static void main(String[] args)throws IOException {
+        int[][] array1 = {{0, 0}, {0, 0}, {0, 0},{0,0},{0,0}};
+        System.out.println("Qual o peso máximo que a mochila suporta?");
+        Scanner peso_da_mochila = new Scanner(System.in);
+        int peso_bag = peso_da_mochila.nextInt();
+        System.out.println("O peso da mochila é " + peso_bag);
+        for(int i = 0 ; i<5 ; i++){
+            for(int x = 0 ; x<2 ; x++){
+                if(x==0){
+                    System.out.println("Digite o valor do item ");
+                    Scanner valor = new Scanner(System.in);
+                    array1[i][x] = valor.nextInt();
+                }
+                else{
+                    System.out.println("Digite o peso do item ");
+                    Scanner peso = new Scanner(System.in);
+                    array1[i][x] = peso.nextInt();
+                }
+            }
+        }
+        System.out.println("-=-=-=-=-lista de itens cadastrados-=-=-=-=-");
+        for(int i = 0 ; i<5 ; i++){
+            for(int x = 0 ; x<2 ; x++){
+                if(x==0){
+                    System.out.println("valor "+"peso" );
+                    System.out.print(array1[i][x] + "     ");
+                }
+                else{
+                    System.out.println(array1[i][x]);
+                    if(array1[i][x]<=peso_bag){
+                    }
+                }
+            }
+        }
+        System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+        //array3
+        int[][] array3 = {{0, 0}, {0, 0}, {0, 0},{0,0},{0,0}};
+        int maior_valor3 = 0;
+        int soma_peso3 = 0;
+        //array2
+        int[][] array2 = {{0, 0}, {0, 0}, {0, 0},{0,0},{0,0}};
+        int maior_valor = 0;
+        int soma_peso = 0;
+        int t = 0;
+        //loop
+        float loop0 = 0;
+        int [][] pivotear ={{0,0}};
+        int loop = 4;
+        int[][] pivo = {{0,0}};
+        //-=-=-
+        while(loop0 < 40 ){
+            while(loop > 1){
+                for(int i = 0 ; i<5 ; i++){
+                    for(int x = 0 ; x<2 ; x++){
+                        if(x==0 && t == 0){
+                            maior_valor = maior_valor + array1[i][x];
+                            array2[i][x] = array1[i][x];
+                        }
+                        else{
+                            if(t==0 ){
+                                if(array1[i][x]<=peso_bag && soma_peso + array1[i][x] <= peso_bag ){
+                                    soma_peso = soma_peso + array1[i][x] ;
+                                    array2[i][x] = array1[i][x];
+                                }
+                                else{
+                                    maior_valor = maior_valor - array1[i][0];
+                                    array2[i][0] = 0;
+                                }
+                            }
+                        }
+                        //array3
+                        if(x==0 && t == 1){
+                            maior_valor3 = maior_valor3 + array1[i][x];
+                            array3[i][x] = array1[i][x];
+                        }
+                        else{
+                            if(t==1 ){
+                                if(array1[i][x]<=peso_bag && soma_peso3 + array1[i][x] <= peso_bag ){
+                                    soma_peso3 = soma_peso3 + array1[i][x] ;
+                                    array3[i][x] = array1[i][x];
+                                }
+                                else{
+                                    maior_valor3 = maior_valor3 - array1[i][0];
+                                    array3[i][0] = 0;
+                                }
+                            }
+                        }
+                    }
+                }
+                pivo[0] = array1[loop-1];
+                array1[loop-1] = array1[loop];
+                array1[loop] = pivo[0];
+                loop--;
+                if(maior_valor > maior_valor3 ){
+                    t = 1 ;
+                    soma_peso3 = 0;
+                    maior_valor3 = 0 ;
+                    array3[0][0] = 0;
+                    array3[0][1] = 0;
+                    array3[1][0] = 0;
+                    array3[1][1] = 0;
+                    array3[2][0] = 0;
+                    array3[2][1] = 0;
+                    array3[3][0] = 0;
+                    array3[3][1] = 0;
+                    array3[4][0] = 0;
+                    array3[4][1] = 0;
+                }
+                else{
+                    t =0;
+                    soma_peso = 0;
+                    maior_valor = 0 ;
+                    array2[0][0] = 0;
+                    array2[0][1] = 0;
+                    array2[1][0] = 0;
+                    array2[1][1] = 0;
+                    array2[2][0] = 0;
+                    array2[2][1] = 0;
+                    array2[3][0] = 0;
+                    array2[3][1] = 0;
+                    array2[4][0] = 0;
+                    array2[4][1] = 0;
+                }
+            }
+            loop = 4;
+            if(loop0 % 3==0 && loop0 != 0){
+                pivotear[0] = array1[0];
+                array1[0] = array1[1];
+                array1[1] = pivotear[0];
+            }
+            loop0++;
+        }
+        System.out.println("A lista com valor máximo de " + maior_valor3 + " com peso total de " + soma_peso3 + " respeitando o peso máximo da mochila");
+        for(int i = 0 ; i<5 ; i++){
+            for(int x = 0 ; x<2 ; x++){
+                if(x==0 && array3[i][x] != 0 && maior_valor3 > maior_valor){
+                    System.out.println("valor "+"peso" );
+                    System.out.print(array3[i][x] + "     ");
+                }
+                else {
+                    if (array3[i][x] != 0 && maior_valor3 > maior_valor) {
+                        System.out.println(array3[i][x]);
+                    }
+                }
+                if (x==0 && array2[i][x] != 0 && maior_valor > maior_valor3) {
+                    System.out.println("valor " + "peso");
+                    System.out.print(array2[i][x] + " ");
+                }
+                else {
+                    if (array2[i][x] != 0 && maior_valor > maior_valor3) {
+                        System.out.println(array2[i][x]);
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
